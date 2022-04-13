@@ -1,10 +1,13 @@
 import { default as express } from "express";
-import { createServer } from "http";
+import { createServer } from "https";
 import { Server } from "socket.io";
-
+import fs from "fs";
 const app = express();
-const httpServer = createServer(app);
-const io = new Server(httpServer, {});
+const httpsServer = createServer({
+  key: fs.readFileSync("key.pem"),
+  cert: fs.readFileSync("cert.pem"),
+}, app);
+const io = new Server(httpsServer, {}).of("/knowbot-ws");
 
 const port = process.env.PORT || 3000;
 
@@ -18,6 +21,6 @@ io.on("connection", (socket) => {
   });
 });
 
-httpServer.listen(port, () => {
+httpsServer.listen(port, () => {
   console.log(`server listening at http://localhost:${port}`);
 });

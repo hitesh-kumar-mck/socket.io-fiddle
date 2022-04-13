@@ -1,8 +1,7 @@
 "use strict";
 
 (function() {
-
-  const socket = io();
+  const socket = io("/myBot-ws", { path: "/path/path/path" });
 
   socket.on("connect", () => {
     console.log(`connect ${socket.id}`);

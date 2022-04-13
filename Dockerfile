@@ -11,5 +11,8 @@ RUN npm install --production
 COPY server.js .
 COPY public/ public/
 
+COPY key.pem .
+COPY cert.pem .
+
 EXPOSE 3000
 CMD [ "node", "server.js" ]
